@@ -1,0 +1,44 @@
+class os_based_NTP{
+
+
+if (os.family == 'RHEL6') {
+
+package {'ntpinstall':
+  name => 'NTP',
+  ensure => 'installed',
+}
+
+file {'/etc/sysconfig/ntpd':
+  ensure => present,
+  content =>  'OPTIONS="-u ntpd"',
+}
+
+service{'ntpd':
+    ensure => running,
+    enable => true,
+} 
+
+} elsif (os.family == 'RHEL7') {
+
+package {'ntpinstall':
+  name => 'ntp',
+  ensure => 'installed',
+}
+
+file {'/etc/sysconfig/chronyd':
+  ensure => present,
+  content =>  'OPTIONS="-u chrony"',
+}
+
+service{'ntpd':
+    ensure => running,
+    enable => true,
+} 
+
+
+
+
+}
+
+
+}
