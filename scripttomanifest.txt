@@ -2,7 +2,7 @@ class myAppConfiguration {
 
 package {''httpd_Apache':
   name => 'httpd',
-  ensure => installed,
+  ensure => 'installed',
 }
 
 $myhttpdcontent = '<IfModule prefork.c>
@@ -59,17 +59,17 @@ service{'httpd':
 # Install Support for Scripting
 package{'perlinstall':
   name => 'mod_perl',
-  ensure => installed,
+  ensure => 'installed',
 }
 
 package{'wsgiinstall':
   name => 'mod_wsgi',
-  ensure => installed,
+  ensure => 'installed',
 }
 
 package{'phpinstall':
   name => 'php php-pear',
-  ensure => installed,
+  ensure => 'installed',
 }
 
 
