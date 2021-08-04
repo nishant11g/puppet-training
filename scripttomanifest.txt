@@ -1,0 +1,57 @@
+class myAppConfiguration {
+
+package {''httpd_Apache':
+  name => 'httpd',
+  ensure => installed,
+}
+
+$myhttpdcontent = '<IfModule prefork.c>
+            	StartServers        4
+            	MinSpareServers     20
+            	MaxSpareServers     40
+            	MaxClients          200
+            	MaxRequestsPerChild 4500
+		</IfModule>'
+
+file {'/etc/https/conf/httpd.conf':
+  ensure => present,
+  content => $myhttpdcontent,
+}
+
+$vhostcontent = '<VirtualHost *:80>
+             	 ServerAdmin admin@hcl.org
+            	 ServerName hcl.org
+             	 ServerAlias www.hcl.org
+            	 DocumentRoot /srv/www/hcl.org/public_html/
+             	 ErrorLog /srv/www/hcl.org/logs/error.log
+             	 CustomLog /srv/www/hcl.org/logs/access.log combined
+		</VirtualHost>'
+
+file {'/etc/httpd/conf.d/vhost.conf':
+  ensure => present,
+  content => $vhostcontent,
+}
+
+exec {'create_dir_public_html':
+  command => 'mkdir -p /srv/www/example.org/public_html',
+  path => ['/bin/'],
+}
+exec {'create_dir_logs':
+  command => 'mkdir -p /srv/www/example.org/logs',
+  path => ['/bin/'],
+}
+
+service{'httpd':
+    ensure => running,
+    enable => true,
+} 
+
+
+
+
+
+
+
+
+
+}
