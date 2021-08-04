@@ -18,7 +18,7 @@ service{'ntpd':
     enable => true,
 } 
 
-} elsif (os.family == 'RHEL7') {
+} else (os.family == 'RHEL7') {
 
 package {'ntpinstall':
   name => 'ntp',
