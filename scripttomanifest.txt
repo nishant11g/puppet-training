@@ -6,12 +6,12 @@ package {''httpd_Apache':
 }
 
 $myhttpdcontent = '<IfModule prefork.c>
-            	StartServers        4
-            	MinSpareServers     20
-            	MaxSpareServers     40
-            	MaxClients          200
-            	MaxRequestsPerChild 4500
-		</IfModule>'
+            		StartServers        4
+            	 	MinSpareServers     20
+            		MaxSpareServers     40
+            		MaxClients          200
+            		MaxRequestsPerChild 4500
+		  </IfModule>'
 
 file {'/etc/https/conf/httpd.conf':
   ensure => present,
@@ -19,12 +19,12 @@ file {'/etc/https/conf/httpd.conf':
 }
 
 $vhostcontent = '<VirtualHost *:80>
-             	 ServerAdmin admin@hcl.org
-            	 ServerName hcl.org
-             	 ServerAlias www.hcl.org
-            	 DocumentRoot /srv/www/hcl.org/public_html/
-             	 ErrorLog /srv/www/hcl.org/logs/error.log
-             	 CustomLog /srv/www/hcl.org/logs/access.log combined
+             	 	ServerAdmin admin@hcl.org
+            	 	ServerName hcl.org
+             	 	ServerAlias www.hcl.org
+            	 	DocumentRoot /srv/www/hcl.org/public_html/
+             	 	ErrorLog /srv/www/hcl.org/logs/error.log
+             	 	CustomLog /srv/www/hcl.org/logs/access.log combined
 		</VirtualHost>'
 
 file {'/etc/httpd/conf.d/vhost.conf':
