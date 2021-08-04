@@ -32,14 +32,24 @@ file {'/etc/httpd/conf.d/vhost.conf':
   content => $vhostcontent,
 }
 
-exec {'create_dir_public_html':
-  command => 'mkdir -p /srv/www/example.org/public_html',
-  path => ['/bin/'],
-}
-exec {'create_dir_logs':
-  command => 'mkdir -p /srv/www/example.org/logs',
-  path => ['/bin/'],
-}
+#exec {'create_dir_public_html':
+#  command => 'mkdir -p /srv/www/example.org/public_html',
+#  path => ['/bin/'],
+#}
+#exec {'create_dir_logs':
+#  command => 'mkdir -p /srv/www/example.org/logs',
+#  path => ['/bin/'],
+#}
+
+file {'/srv/www/example.org/public_html':
+  ensure: 'directory',
+  recurse: true,
+ }
+ 
+ file {'/srv/www/example.org/logs':
+  ensure: 'directory',
+  recurse: true,
+ }
 
 service{'httpd':
     ensure => running,
@@ -57,19 +67,11 @@ service{'httpd':
 
 
 # Install Support for Scripting
-package{'perlinstall':
-  name => 'mod_perl',
-  ensure => 'installed',
-}
-
-package{'wsgiinstall':
-  name => 'mod_wsgi',
-  ensure => 'installed',
-}
-
-package{'phpinstall':
-  name => 'mod_php-pear',
-  ensure => 'installed',
+['mod_perl', 'mod_wsgi', 'mod_php', 'mod_php-pear'].each |String $mod_package| {
+  package{"Install package ${mod_package}":
+    name   => $mod_package,
+    ensure => installed,
+  }
 }
 
 
