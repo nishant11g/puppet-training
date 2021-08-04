@@ -68,7 +68,7 @@ package{'wsgiinstall':
 }
 
 package{'phpinstall':
-  name => 'php php-pear',
+  name => 'mod_php-pear',
   ensure => 'installed',
 }
 
