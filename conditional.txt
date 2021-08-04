@@ -1,7 +1,7 @@
 class os_based_NTP{
 
 
-if (os.family == 'RHEL6') {
+if ($facts['os']['release']['major'] == '6'  && $facts['os']['family'] == 'RHEL') {
 
 package {'ntpinstall':
   name => 'NTP',
@@ -18,7 +18,7 @@ service{'ntpd':
     enable => true,
 } 
 
-} else (os.family == 'RHEL7') {
+} elsif ($facts['os']['release']['major'] == '7' && $facts['os']['family'] == 'RHEL') {
 
 package {'ntpinstall':
   name => 'ntp',
@@ -38,6 +38,7 @@ service{'ntpd':
 
 
 
+}else {
 }
 
 
