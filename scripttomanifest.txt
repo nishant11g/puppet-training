@@ -47,7 +47,30 @@ service{'httpd':
 } 
 
 
+## Apache Mods and Scripting
 
+# Install Apache Modules
+
+
+
+
+
+
+# Install Support for Scripting
+package{'perlinstall':
+  name => 'mod_perl',
+  ensure => installed,
+}
+
+package{'wsgiinstall':
+  name => 'mod_wsgi',
+  ensure => installed,
+}
+
+package{'phpinstall':
+  name => 'php php-pear',
+  ensure => installed,
+}
 
 
 
