@@ -1,0 +1,53 @@
+/production/manifest/site.pp
+
+contains appx
+
+
+mkdir /production/modules/appx/
+mkdir /production/modules/appx/files
+mkdir /production/modules/appx/manifests
+mkdir /production/data/
+
+Hiera common.yaml-->
+appx::config_app:version: '1.0'
+appx::config_app:appname: 'appX'
+appx::config_app:ensure: 'enable'
+
+under files -->
+create file with name appX.txt with content
+"Single manifested static module without files/templates
+Single manifested static module with files
+Single manifested static module with templates *****************
+Many manifested static module"
+
+under /production/modules/appx/manifests --->
+
+create init.pp
+class appx{
+contains appx::config_app
+}
+
+create config_app.pp
+class appx::config_app (String $appname,
+String $version,
+String $ensure) {
+package {'my_${appname}':
+  name => $appname,
+  ensure => $ensure,
+}
+
+file {'/etc/init.d/appX':
+  ensure => present,
+  source => 'puppet:///modules/appx/files/appX.txt',
+}
+
+service{ $appname :
+    ensure => running,
+    enable => true,
+}
+
+
+
+}
+
+
